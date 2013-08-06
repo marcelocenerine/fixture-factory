@@ -2,8 +2,11 @@ package br.com.six2six.fixturefactory;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class TemplateHolder {
+	
+	private static Logger logger = Logger.getLogger(TemplateHolder.class.getName());
 
 	private Class<?> clazz;
 	
@@ -14,7 +17,8 @@ public class TemplateHolder {
 	}
 
 	public TemplateHolder addTemplate(String label, Rule rule) {
-		rules.put(label, rule);
+		Rule old = rules.put(label, rule);
+		if (old != null) logger.warning(String.format("Overriding existing template ['%s' -> %s] with a new value.", label, clazz.getName()));
 		return this;
 	}
 	
